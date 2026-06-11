@@ -50,6 +50,8 @@ Add to your `claude_desktop_config.json`:
 
 | Tool | Description | Parameters |
 | --- | --- | --- |
+| `acknowledge_alert` | Acknowledge an alert. Alert must be in open, dropped, or suppressed state. | id |
+| `create_alert` | Create a new alert. Requires a title, urgency, and at least one destination (team, router, or account user). | title, urgency, description, destination_team_ids, destination_router_ids, destination_account_user_ids, tags, incident, incident_severity, incident_message |
 | `disable_integration` | Disable an integration so it stops receiving webhooks and creating alerts. | id |
 | `enable_integration` | Enable an integration so it can receive webhooks and create alerts. | id |
 | `get_account_user` | Get a single account user by ID. Includes roles, notification rule, and associated user details. | id |
@@ -65,6 +67,8 @@ Add to your `claude_desktop_config.json`:
 | `list_schedules` | List all on-call schedules | - |
 | `list_teams` | List all teams | - |
 | `list_users` | List all users. Users represent physical people and include their emails and phone numbers. | limit, offset, page, sort, direction |
+| `reject_alert` | Reject an alert. The API key user must have an open workflow for this alert. | id |
+| `resolve_alert` | Resolve an alert. Alert must be in open, dropped, or acknowledged state. | id |
 
 ## License
 
