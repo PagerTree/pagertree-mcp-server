@@ -62,8 +62,30 @@ export const pagertree = {
   getAlert: (id: string) =>
     request<{ data: unknown }>(`/alerts/${id}`),
 
+  createAlert: (params: {
+    title: string;
+    urgency: "low" | "medium" | "high" | "critical";
+    description?: string;
+    destination_team_ids?: string[];
+    destination_router_ids?: string[];
+    destination_account_user_ids?: string[];
+    tags?: string[];
+    meta?: {
+      incident?: boolean;
+      incident_severity?: "SEV-1" | "SEV-2" | "SEV-3" | "SEV-4" | "SEV-5" | "SEV-UNKNOWN";
+      incident_message?: string;
+    };
+  }) =>
+    request<{ data: unknown }>(`/alerts`, {
+      method: "POST",
+      body: JSON.stringify(params),
+    }),
+
   acknowledgeAlert: (id: string) =>
     request<{ data: unknown }>(`/alerts/${id}/acknowledge`, { method: "POST" }),
+
+  rejectAlert: (id: string) =>
+    request<{ data: unknown }>(`/alerts/${id}/reject`, { method: "POST" }),
 
   resolveAlert: (id: string) =>
     request<{ data: unknown }>(`/alerts/${id}/resolve`, { method: "POST" }),

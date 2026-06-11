@@ -14,8 +14,10 @@ import { registerListLogs } from "./list-logs.js";
 import { registerListSchedules } from "./list-schedules.js";
 import { registerListTeams } from "./list-teams.js";
 import { registerListUsers } from "./list-users.js";
-// import { registerAcknowledgeAlert } from "./acknowledge-alert.js";
-// import { registerResolveAlert } from "./resolve-alert.js";
+import { registerAcknowledgeAlert } from "./acknowledge-alert.js";
+import { registerRejectAlert } from "./reject-alert.js";
+import { registerResolveAlert } from "./resolve-alert.js";
+import { registerCreateAlert } from "./create-alert.js";
 
 const tools = [
   registerDisableIntegration,
@@ -33,8 +35,10 @@ const tools = [
   registerListSchedules,
   registerListTeams,
   registerListUsers,
-  // registerAcknowledgeAlert,
-  // registerResolveAlert,
+  registerAcknowledgeAlert,
+  registerRejectAlert,
+  registerResolveAlert,
+  registerCreateAlert,
 ];
 
 export function registerAllTools(server: McpServer) {
