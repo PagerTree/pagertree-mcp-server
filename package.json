@@ -1,0 +1,35 @@
+{
+  "name": "pagertree-mcp-server",
+  "version": "0.1.0",
+  "description": "MCP server for PagerTree - incident management and on-call alerting",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "pagertree-mcp-server": "dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsc --watch"
+  },
+  "keywords": [
+    "mcp",
+    "pagertree",
+    "incident-management",
+    "on-call",
+    "alerting"
+  ],
+  "author": "PagerTree LLC",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.3",
+    "typescript": "^6.0.3"
+  }
+}
