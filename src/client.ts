@@ -90,6 +90,84 @@ export const pagertree = {
   resolveAlert: (id: string) =>
     request<{ data: unknown }>(`/alerts/${id}/resolve`, { method: "POST" }),
 
+  // Events
+  listEvents: (params?: { limit?: number; offset?: number; page?: number; sort?: string; direction?: "asc" | "desc" }) => {
+    const query = new URLSearchParams();
+    if (params?.limit) query.set("limit", String(params.limit));
+    if (params?.offset) query.set("offset", String(params.offset));
+    if (params?.page) query.set("page", String(params.page));
+    if (params?.sort) query.set("sort", params.sort);
+    if (params?.direction) query.set("direction", params.direction);
+    return request<{ data: unknown[]; has_more: boolean; total_count: number }>(`/events?${query}`);
+  },
+
+  getEvent: (id: string) =>
+    request<{ data: unknown }>(`/events/${id}`),
+
+  createEvent: (params: {
+    start_time: string;
+    end_time: string;
+    layer: number;
+    time_zone: string;
+    account_user_ids: string[];
+    schedule_ids?: string[];
+    repeat?: boolean;
+    frequency?: number;
+    frequency_unit?: "hourly" | "daily" | "weekly" | "monthly" | "yearly";
+    days_of_week?: number[];
+    repeat_end_datetime?: string;
+    rotation?: boolean;
+    parent_id?: string;
+  }) =>
+    request<{ data: unknown }>(`/events`, {
+      method: "POST",
+      body: JSON.stringify(params),
+    }),
+
+  updateEvent: (id: string, params: {
+    start_time?: string;
+    end_time?: string;
+    layer?: number;
+    time_zone?: string;
+    account_user_ids?: string[];
+    schedule_ids?: string[];
+    repeat?: boolean;
+    frequency?: number;
+    frequency_unit?: "hourly" | "daily" | "weekly" | "monthly" | "yearly";
+    days_of_week?: number[];
+    repeat_end_datetime?: string;
+    rotation?: boolean;
+  }) =>
+    request<{ data: unknown }>(`/events/${id}`, {
+      method: "PUT",
+      body: JSON.stringify(params),
+    }),
+
+  deleteEvent: (id: string) =>
+    request<{ data: unknown }>(`/events/${id}`, { method: "DELETE" }),
+
+  overrideEvent: (id: string, params: {
+    start_time: string;
+    end_time: string;
+    layer: number;
+    time_zone: string;
+    account_user_ids: string[];
+    action_time: string;
+  }) =>
+    request<{ data: unknown }>(`/events/${id}/override`, {
+      method: "POST",
+      body: JSON.stringify(params),
+    }),
+
+  addEventException: (id: string, params: { action_time: string }) =>
+    request<{ data: unknown }>(`/events/${id}/add_exception`, {
+      method: "POST",
+      body: JSON.stringify(params),
+    }),
+
+  listEventTimeZones: () =>
+    request<{ data: string[] }>(`/events/time_zones`),
+
   // Integrations
   listIntegrations: (params?: { limit?: number; offset?: number; page?: number; sort?: string; direction?: "asc" | "desc" }) => {
     const query = new URLSearchParams();
