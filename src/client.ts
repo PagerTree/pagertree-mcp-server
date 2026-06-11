@@ -1,12 +1,12 @@
-// src/client.ts
 const BASE_URL = process.env.PAGERTREE_API_URL ?? "https://api.pagertree.com/api/v4";
-const API_TOKEN = process.env.PAGERTREE_API_TOKEN;
-
-if (!API_TOKEN) {
-  throw new Error("PAGERTREE_API_TOKEN environment variable is required");
-}
 
 async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
+  const API_TOKEN = process.env.PAGERTREE_API_TOKEN;
+
+  if (!API_TOKEN) {
+    throw new Error("PAGERTREE_API_TOKEN environment variable is required");
+  }
+
   const url = `${BASE_URL}${path}`;
 
   const response = await fetch(url, {
