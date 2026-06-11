@@ -218,6 +218,35 @@ export const pagertree = {
     return request<{ data: unknown[]; has_more: boolean; total_count: number }>(`/logs?${query}`);
   },
 
+  // Notification Rules
+  listNotificationRules: (params?: { limit?: number; offset?: number; page?: number; sort?: string; direction?: "asc" | "desc" }) => {
+    const query = new URLSearchParams();
+    if (params?.limit) query.set("limit", String(params.limit));
+    if (params?.offset) query.set("offset", String(params.offset));
+    if (params?.page) query.set("page", String(params.page));
+    if (params?.sort) query.set("sort", params.sort);
+    if (params?.direction) query.set("direction", params.direction);
+    return request<{ data: unknown[]; has_more: boolean; total_count: number }>(`/notification_rules?${query}`);
+  },
+
+  getNotificationRule: (id: string) =>
+    request<{ data: unknown }>(`/notification_rules/${id}`),
+
+  createNotificationRule: (params: { name: string; enabled?: boolean; rules?: string }) =>
+    request<{ data: unknown }>(`/notification_rules`, {
+      method: "POST",
+      body: JSON.stringify(params),
+    }),
+
+  updateNotificationRule: (id: string, params: { name?: string; enabled?: boolean; rules?: string }) =>
+    request<{ data: unknown }>(`/notification_rules/${id}`, {
+      method: "PUT",
+      body: JSON.stringify(params),
+    }),
+
+  deleteNotificationRule: (id: string) =>
+    request<{ data: unknown }>(`/notification_rules/${id}`, { method: "DELETE" }),
+
   // Schedules
   listSchedules: () =>
     request<{ data: unknown[] }>(`/schedules`),
