@@ -5,13 +5,25 @@ import { pagertree } from "../client.js";
 export function registerUpdateAccountUser(server: McpServer) {
   server.tool(
     "update_account_user",
-    `Update an existing account user. Only provide the fields you want to change.
+    `Update an existing account user. Only send fields you want to change - omitted fields are left as-is.
 
 Tips:
-- To add/update emails or phones, include their id to update or omit id to add new ones
-- To remove an email or phone, include its id with _destroy: true
-- Use list_notification_rules to find notification_rule_id values
-- Valid roles: admin, billing, broadcaster, communicator`,
+- To add emails or phones, include them without an id
+- To update existing emails or phones, include their id
+- To remove an email or phone, include its id with \`_destroy: true\`
+- To assign a notification rule, use \`list_notification_rules\` to find the id first
+- Valid roles: admin, billing, broadcaster, communicator, integrator
+
+Prerequisites:
+- \`list_account_users\` or \`get_account_user\` → find the ID
+- \`get_account_user\` → check current values before updating
+- \`list_notification_rules\` → find notification_rule_id (if updating)
+- \`list_teams\` → find member_team_ids (if updating)
+
+Errors:
+- 422 if removing the last admin role from the account
+
+Related: \`get_account_user\` to read current state, \`delete_account_user\` to remove.`,
     {
       id: z.string().describe("Account user ID to update"),
       notification_rule_id: z.string().optional().describe("Notification rule ID to assign"),
@@ -20,6 +32,7 @@ Tips:
         billing: z.boolean().optional(),
         broadcaster: z.boolean().optional(),
         communicator: z.boolean().optional(),
+        integrator: z.boolean().optional(),
       }).optional().describe("Roles to assign"),
       member_team_ids: z.array(z.string()).optional().describe("Team IDs to assign as member"),
       name: z.string().optional().describe("Full name of the user"),

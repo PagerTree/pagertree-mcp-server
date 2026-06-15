@@ -5,15 +5,31 @@ import { pagertree } from "../client.js";
 export function registerCreateAccountUser(server: McpServer) {
   server.tool(
     "create_account_user",
-    `Create a new account user. This creates a User and associates them with your account.
+    `Create a new user and associate them with this PagerTree account.
 
-Tips:
-- name and at least one email are required
-- PagerTree will email the user with login credentials automatically
-- If the user already exists in PagerTree they will receive an invite email
-- Use update_account_user to assign a notification_rule_id after creation
-- Valid roles: admin, billing, broadcaster, communicator
-- Use list_teams to find member_team_ids`,
+Required: name, email
+Optional: phone (E.164 format e.g. +15555555555), roles, notification_rule_id, member_team_ids
+
+Important:
+- Always use this tool to create users - never use any other user creation endpoint
+- PagerTree will automatically email the new user their login credentials
+- If the email already exists in PagerTree, the user will receive an invite email to join this account
+
+After creation:
+- Use \`update_account_user\` to assign a notification_rule_id if needed
+- Use \`update_team\` to add the user to additional teams, or pass member_team_ids at creation
+
+Prerequisites:
+- \`list_notification_rules\` → find notification_rule_id (optional)
+- \`list_teams\` → find member_team_ids (optional)
+
+Valid roles: admin, billing, broadcaster, communicator, integrator (all default to false if omitted)
+
+Errors:
+- 422 if name or email is missing
+- 422 if email is invalid format
+
+Related: \`update_account_user\` to modify, \`delete_account_user\` to remove, \`list_account_users\` to find existing users.`,
     {
       name: z.string().describe("Full name of the user"),
       email: z.string().email().describe("Primary email address of the user"),
@@ -22,7 +38,8 @@ Tips:
         admin: z.boolean().optional().describe("Admin role - full account access"),
         billing: z.boolean().optional().describe("Billing role - can manage billing"),
         broadcaster: z.boolean().optional().describe("Broadcaster role - can send broadcasts"),
-        communicator: z.boolean().optional().describe("Communicator role"),
+        communicator: z.boolean().optional().describe("Communicator role - Can create stakeholder messages"),
+        integrator: z.boolean().optional().describe("Integrator role - can manage integrations"),
       }).optional().describe("Roles to assign to this account user"),
       member_team_ids: z.array(z.string()).optional().describe("Team IDs to add this user to as a member"),
       notify_push: z.boolean().optional().describe("Enable push notifications"),

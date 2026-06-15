@@ -102,10 +102,6 @@ import { registerDeleteTeam } from "./delete-team.js";
 import { registerGetCurrentOncall } from "./get-current-oncall.js";
 import { registerListTeamAlerts } from "./list-team-alerts.js";
 
-// Users
-import { registerListUsers } from "./list-users.js";
-import { registerGetUser } from "./get-user.js";
-
 type ToolRegistrar = (server: McpServer) => void;
 type TaggedTool = { fn: ToolRegistrar; readonly: boolean };
 
@@ -216,10 +212,6 @@ const tools: TaggedTool[] = [
   { fn: registerDeleteTeam, readonly: false },
   { fn: registerGetCurrentOncall, readonly: true },
   { fn: registerListTeamAlerts, readonly: true },
-
-  // Users
-  { fn: registerListUsers, readonly: true },
-  { fn: registerGetUser, readonly: true },
 ];
 
 export function registerAllTools(server: McpServer) {
