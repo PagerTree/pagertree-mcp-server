@@ -3,9 +3,15 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { pagertree } from "../client.js";
 
 export function registerUpdateAlert(server: McpServer) {
-  server.tool(
-    "update_alert",
-    "Update an existing alert. Only provide the fields you want to change.",
+server.tool(
+  "update_alert",
+  `Update an existing alert. Only send fields you want to change - omitted fields are left as-is.
+
+Prerequisites:
+- \`list_alerts\` or \`get_alert\` → find the ID
+- \`get_alert\` → check current values before updating
+
+Related: \`get_alert\` to read current state, \`delete_alert\` to remove.`,
     {
       id: z.string().describe("Alert ID to update"),
       title: z.string().optional().describe("Title of the alert"),

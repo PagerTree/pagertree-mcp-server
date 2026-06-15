@@ -3,9 +3,11 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { pagertree } from "../client.js";
 
 export function registerGetAlert(server: McpServer) {
-  server.tool(
-    "get_alert",
-    "Get a single alert by ID",
+server.tool(
+  "get_alert",
+  `Get a single alert by ID. Returns full details including title, description, urgency, status, timestamps, and meta (incident info).
+
+Related: \`list_alerts\` to find IDs, \`acknowledge_alert\` / \`resolve_alert\` / \`reject_alert\` to change state, \`update_alert\` to modify fields.`,
     {
       id: z.string().describe("Alert ID"),
     },

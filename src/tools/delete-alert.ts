@@ -4,8 +4,13 @@ import { pagertree } from "../client.js";
 
 export function registerDeleteAlert(server: McpServer) {
   server.tool(
-    "delete_alert",
-    "Delete an alert permanently.",
+  "delete_alert",
+  `Permanently delete an alert. Cannot be undone.
+
+Prerequisites:
+- \`get_alert\` → confirm correct record before deleting
+
+Related: \`resolve_alert\` to resolve instead of delete, \`list_alerts\` to find IDs.`,
     {
       id: z.string().describe("Alert ID to delete"),
     },

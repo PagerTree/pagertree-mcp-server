@@ -3,9 +3,14 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { pagertree } from "../client.js";
 
 export function registerCreateAlertComment(server: McpServer) {
-  server.tool(
-    "create_alert_comment",
-    "Add a comment to an alert. Useful for adding notes, status updates, or communication to an alert's timeline.",
+server.tool(
+  "create_alert_comment",
+  `Add a comment to an alert. Useful for adding status updates, notes, or communication to the alert timeline.
+
+Prerequisites:
+- \`list_alerts\` or \`get_alert\` → find the alert ID
+
+Related: \`list_alert_comments\` to read existing comments.`,
     {
       id: z.string().describe("Alert ID to comment on"),
       body: z.string().describe("Comment text"),
