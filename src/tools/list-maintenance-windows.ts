@@ -5,7 +5,14 @@ import { pagertree } from "../client.js";
 export function registerListMaintenanceWindows(server: McpServer) {
   server.tool(
     "list_maintenance_windows",
-    "List all maintenance windows. Maintenance windows suppress alerts from integrations during a specified time frame.",
+    `List all maintenance windows. Maintenance windows suppress alerts from specified integrations during a defined time period - useful for planned outages or deployments.
+
+Tips:
+- Sort by \`id\` asc/desc instead of \`created_at\` - IDs are ULIDs and time-sortable
+- Default limit is 10, maximum is 100
+- Check \`start_datetime\` and \`end_datetime\` to see active vs upcoming vs past windows
+
+Related: \`get_maintenance_window\` to fetch a single record, \`create_maintenance_window\` to schedule a new window.`,
     {
       limit: z.number().int().min(1).max(100).optional().default(10).describe("Number of maintenance windows to return"),
       offset: z.number().int().min(0).optional().describe("Number of records to skip"),
