@@ -5,7 +5,14 @@ import { pagertree } from "../client.js";
 export function registerDeleteIntegration(server: McpServer) {
   server.tool(
     "delete_integration",
-    "Delete an integration permanently.",
+    `Permanently delete an integration. Cannot be undone.
+
+Important: Deleting an integration will stop all future alerts from that integration. The webhook URL will stop working immediately. Consider using \`disable_integration\` instead if you may want to re-enable it later.
+
+Prerequisites:
+- \`get_integration\` → confirm correct record before deleting
+
+Related: \`disable_integration\` to temporarily stop without deleting, \`list_integrations\` to find IDs.`,
     {
       id: z.string().describe("Integration ID to delete"),
     },

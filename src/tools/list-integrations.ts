@@ -5,7 +5,14 @@ import { pagertree } from "../client.js";
 export function registerListIntegrations(server: McpServer) {
   server.tool(
     "list_integrations",
-    "List all integrations. Integrations connect PagerTree to 3rd party applications and are responsible for creating alerts.",
+    `List all integrations. Integrations connect PagerTree to 3rd party tools and are responsible for creating alerts.
+
+Tips:
+- Sort by \`id\` asc/desc instead of \`created_at\` - IDs are ULIDs and time-sortable
+- Default limit is 10, maximum is 100
+- Check \`enabled\` field to see if an integration is active
+
+Related: \`get_integration\` to fetch a single record, \`create_integration\` to add a new one, \`list_integration_types\` to see available integration types.`,
     {
       limit: z.number().int().min(1).max(100).optional().default(10).describe("Number of integrations to return"),
       offset: z.number().int().min(0).optional().describe("Number of records to skip"),
