@@ -5,7 +5,28 @@ import { pagertree } from "../client.js";
 export function registerUpdateTeam(server: McpServer) {
   server.tool(
     "update_team",
-    "Update an existing team. Only provide the fields you want to change.",
+    `Update an existing team. Only send fields you want to change - omitted fields are left as-is.
+
+Important:
+- Updating member_account_user_ids or admin_account_user_ids replaces the entire list
+- Use escalation_policy_id to switch the team's active escalation policy
+- Use schedule_id to switch the team's active schedule
+
+Prerequisites:
+- \`list_teams\` or \`get_team\` → find the ID
+- \`get_team\` → check current values before updating
+- \`list_account_users\` → find account user IDs if changing membership
+- \`list_escalation_policies\` → find escalation_policy_id if switching policy
+- \`list_schedules\` → find schedule_id if switching schedule
+
+Tips:
+- drop_notifications and handoff_notifications options: none, team_all, team_admins, oncall_rotation, specific_users
+- If setting drop_notifications or handoff_notifications to specific_users, also provide the corresponding account user IDs
+
+Errors:
+- 422 if removing all admins from the team
+
+Related: \`get_team\` to read current state, \`delete_team\` to remove.`,
     {
       id: z.string().describe("Team ID to update"),
       name: z.string().optional().describe("Name of the team"),

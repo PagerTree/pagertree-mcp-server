@@ -5,7 +5,18 @@ import { pagertree } from "../client.js";
 export function registerListTeamAlerts(server: McpServer) {
   server.tool(
     "list_team_alerts",
-    "List alerts that have been assigned to a specific team.",
+    `List alerts that have been assigned to a specific team.
+
+Tips:
+- Sort by \`id\` asc/desc instead of \`created_at\` - IDs are ULIDs and time-sortable
+- Default limit is 10, maximum is 100
+- Use \`list_alerts\` with a status filter for account-wide alert listing
+- This tool is useful for team-specific alert dashboards or reports
+
+Prerequisites:
+- \`list_teams\` or \`get_team\` → find the team ID
+
+Related: \`list_alerts\` for account-wide alerts, \`get_team\` to find team IDs, \`acknowledge_alert\` / \`resolve_alert\` to action alerts.`,
     {
       id: z.string().describe("Team ID"),
       limit: z.number().int().min(1).max(100).optional().default(10).describe("Number of alerts to return"),

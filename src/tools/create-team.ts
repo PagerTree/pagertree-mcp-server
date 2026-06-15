@@ -5,12 +5,33 @@ import { pagertree } from "../client.js";
 export function registerCreateTeam(server: McpServer) {
   server.tool(
     "create_team",
-    `Create a new team. A default schedule and escalation policy will be created automatically by PagerTree.
+    `Create a new team.
+
+Required: name, at least 1 member_account_user_id, at least 1 admin_account_user_id (can be the same person)
+
+After creation PagerTree automatically creates:
+- A default Schedule for managing on-call events
+- A default Escalation Policy for alert escalation
+
+Use \`get_team\` after creation to find the auto-created schedule_id and escalation_policy_id.
+
+Prerequisites:
+- \`list_account_users\` → find member_account_user_ids and admin_account_user_ids
 
 Tips:
-- Requires at least 1 member and 1 admin account user ID (can be the same person)
-- Use list_account_users to find account user IDs
-- drop_notifications and handoff_notifications control who gets notified on alert drop/handoff`,
+- drop_notifications controls who is notified when an alert is dropped (no one acknowledged before escalation exhausted)
+  - none: no notification
+  - team_all: all team members
+  - team_admins: team admins only
+  - oncall_rotation: only users currently on-call
+  - specific_users: specific account users (requires drop_notification_account_user_ids)
+- handoff_notifications controls who is notified when the on-call rotation changes (same options as drop_notifications)
+
+Errors:
+- 422 if no member_account_user_ids provided
+- 422 if no admin_account_user_ids provided
+
+Related: \`update_team\` to modify, \`delete_team\` to remove, \`get_team\` to inspect after creation, \`create_event\` to add on-call events to the auto-created schedule.`,
     {
       name: z.string().describe("Name of the team"),
       member_account_user_ids: z.array(z.string()).describe("Account user IDs with member role"),
