@@ -145,15 +145,6 @@ export const pagertree = {
       body: JSON.stringify(params),
     }),
 
-  acknowledgeAlert: (id: string) =>
-    request<{ data: unknown }>(`/alerts/${id}/acknowledge`, { method: "POST" }),
-
-  rejectAlert: (id: string) =>
-    request<{ data: unknown }>(`/alerts/${id}/reject`, { method: "POST" }),
-
-  resolveAlert: (id: string) =>
-    request<{ data: unknown }>(`/alerts/${id}/resolve`, { method: "POST" }),
-
   updateAlert: (id: string, params: {
     title?: string;
     description?: string;
@@ -172,14 +163,23 @@ export const pagertree = {
   deleteAlert: (id: string) =>
     request<{ data: unknown }>(`/alerts/${id}`, { method: "DELETE" }),
 
+  acknowledgeAlert: (id: string) =>
+    request<{ data: unknown }>(`/alerts/${id}/acknowledge`, { method: "POST" }),
+
+  rejectAlert: (id: string) =>
+    request<{ data: unknown }>(`/alerts/${id}/reject`, { method: "POST" }),
+
+  resolveAlert: (id: string) =>
+    request<{ data: unknown }>(`/alerts/${id}/resolve`, { method: "POST" }),
+
+  listAlertComments: (id: string) =>
+    request<{ data: unknown[] }>(`/alerts/${id}/comments`),
+
   createAlertComment: (id: string, body: string) =>
     request<{ data: unknown }>(`/alerts/${id}/comments`, {
       method: "POST",
       body: JSON.stringify({ body }),
     }),
-
-  listAlertComments: (id: string) =>
-    request<{ data: unknown[] }>(`/alerts/${id}/comments`),
 
   // ============================================================
   // Broadcasts
@@ -235,14 +235,14 @@ export const pagertree = {
   deleteBroadcast: (id: string) =>
     request<{ data: unknown }>(`/broadcasts/${id}`, { method: "DELETE" }),
 
+  listBroadcastComments: (id: string) =>
+    request<{ data: unknown[] }>(`/broadcasts/${id}/comments`),
+
   createBroadcastComment: (id: string, body: string) =>
     request<{ data: unknown }>(`/broadcasts/${id}/comments`, {
       method: "POST",
       body: JSON.stringify({ body }),
     }),
-
-  listBroadcastComments: (id: string) =>
-    request<{ data: unknown[] }>(`/broadcasts/${id}/comments`),
 
   // ============================================================
   // Escalation Policies
@@ -358,6 +358,12 @@ export const pagertree = {
       body: JSON.stringify(params),
     }),
 
+  terminateEvent: (id: string, params: { action_time: string }) =>
+    request<{ data: unknown }>(`/events/${id}/terminate_on`, {
+      method: "POST",
+      body: JSON.stringify(params),
+    }),
+
   addEventException: (id: string, params: { action_time: string }) =>
     request<{ data: unknown }>(`/events/${id}/add_exception`, {
       method: "POST",
@@ -366,12 +372,6 @@ export const pagertree = {
 
   listEventTimeZones: () =>
     request<{ data: string[] }>(`/events/time_zones`),
-
-  terminateEvent: (id: string, params: { action_time: string }) =>
-    request<{ data: unknown }>(`/events/${id}/terminate_on`, {
-      method: "POST",
-      body: JSON.stringify(params),
-    }),
 
   // ============================================================
   // Integrations
@@ -382,6 +382,38 @@ export const pagertree = {
 
   getIntegration: (id: string) =>
     request<{ data: unknown }>(`/integrations/${id}`),
+
+  createIntegration: (params: {
+    name: string;
+    urgency: "low" | "medium" | "high" | "critical";
+    integration_type_id: string;
+    enabled?: boolean;
+    account_user_ids?: string[];
+    router_ids?: string[];
+    team_ids?: string[];
+    [key: string]: unknown; // option_ prefixed fields
+  }) =>
+    request<{ data: unknown }>(`/integrations`, {
+      method: "POST",
+      body: JSON.stringify(params),
+    }),
+
+  updateIntegration: (id: string, params: {
+    name?: string;
+    urgency?: "low" | "medium" | "high" | "critical";
+    enabled?: boolean;
+    account_user_ids?: string[];
+    router_ids?: string[];
+    team_ids?: string[];
+    [key: string]: unknown; // option_ prefixed fields
+  }) =>
+    request<{ data: unknown }>(`/integrations/${id}`, {
+      method: "PUT",
+      body: JSON.stringify(params),
+    }),
+
+  deleteIntegration: (id: string) =>
+    request<{ data: unknown }>(`/integrations/${id}`, { method: "DELETE" }),
 
   enableIntegration: (id: string) =>
     request<{ data: unknown }>(`/integrations/${id}`, {
@@ -395,43 +427,11 @@ export const pagertree = {
       body: JSON.stringify({ enabled: false }),
     }),
 
-    createIntegration: (params: {
-      name: string;
-      urgency: "low" | "medium" | "high" | "critical";
-      integration_type_id: string;
-      enabled?: boolean;
-      account_user_ids?: string[];
-      router_ids?: string[];
-      team_ids?: string[];
-      [key: string]: unknown; // option_ prefixed fields
-    }) =>
-      request<{ data: unknown }>(`/integrations`, {
-        method: "POST",
-        body: JSON.stringify(params),
-      }),
+  listIntegrationTypes: (params?: PaginationParams) =>
+    request<PaginatedResponse>(`/integration_types?${paginationQuery(params)}`),
 
-    updateIntegration: (id: string, params: {
-      name?: string;
-      urgency?: "low" | "medium" | "high" | "critical";
-      enabled?: boolean;
-      account_user_ids?: string[];
-      router_ids?: string[];
-      team_ids?: string[];
-      [key: string]: unknown; // option_ prefixed fields
-    }) =>
-      request<{ data: unknown }>(`/integrations/${id}`, {
-        method: "PUT",
-        body: JSON.stringify(params),
-      }),
-
-    deleteIntegration: (id: string) =>
-      request<{ data: unknown }>(`/integrations/${id}`, { method: "DELETE" }),
-
-    listIntegrationTypes: (params?: PaginationParams) =>
-      request<PaginatedResponse>(`/integration_types?${paginationQuery(params)}`),
-
-    getIntegrationType: (id: string) =>
-      request<{ data: unknown }>(`/integration_types/${id}`),
+  getIntegrationType: (id: string) =>
+    request<{ data: unknown }>(`/integration_types/${id}`),
 
   // ============================================================
   // Logs
