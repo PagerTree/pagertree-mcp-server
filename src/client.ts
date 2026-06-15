@@ -252,7 +252,7 @@ export const pagertree = {
     escalation_layers_attributes?: {
       layer: number;
       timeout: number;
-      timeout_unit: string;
+      timeout_unit: "second" | "minute" | "hour" | "day" | "week" | "month" | "year";
       color_hex?: string;
     }[];
   }) =>
@@ -270,7 +270,7 @@ export const pagertree = {
       id?: string;
       layer?: number;
       timeout?: number;
-      timeout_unit?: string;
+      timeout_unit?: "second" | "minute" | "hour" | "day" | "week" | "month" | "year";
       color_hex?: string;
       _destroy?: boolean;
     }[];

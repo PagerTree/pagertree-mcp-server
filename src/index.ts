@@ -33,7 +33,19 @@ Default limit is 10. Maximum is 100.
 
 ## IDs in Parameters
 When a tool requires an ID (e.g. \`team_id\`, \`account_user_id\`), use the corresponding list tool first to find the correct ID before calling the write tool.
-If a user provides a tiny_id or prefix_id in conversation, you can use it directly for GET lookups but must resolve the ULID first before using it in a POST/PUT body.`,
+If a user provides a tiny_id or prefix_id in conversation, you can use it directly for GET lookups but must resolve the ULID first before using it in a POST/PUT body.
+
+## Teams, Schedules, and Escalation Policies
+When a team is created, PagerTree automatically creates:
+- A default **Schedule** for managing on-call events
+- A default **Escalation Policy** for alert escalation
+
+Workflow for modifying a team's on-call setup:
+1. \`get_team\` → find the team's \`schedule_id\` and \`escalation_policy_id\`
+2. \`get_schedule\` / \`get_escalation_policy\` → inspect current configuration
+3. \`update_schedule\` / \`update_escalation_policy\` → make changes
+
+Avoid creating standalone schedules or escalation policies unless you specifically need multiple per team. Always check the team first.`,
   }
 );
 
