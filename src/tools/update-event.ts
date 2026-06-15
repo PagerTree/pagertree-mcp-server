@@ -5,7 +5,22 @@ import { pagertree } from "../client.js";
 export function registerUpdateEvent(server: McpServer) {
   server.tool(
     "update_event",
-    "Update an existing on-call event. Only provide the fields you want to change. Use list_event_time_zones to get valid timezone names.",
+    `Update an existing on-call event. Only send fields you want to change - omitted fields are left as-is.
+
+Important: Updating an event modifies ALL occurrences (past, present, and future) for repeating/rotating events.
+- To change only a single occurrence → use \`override_event\` instead
+- To end a repeating series from a date onward → use \`terminate_event\` instead
+- To skip a single occurrence → use \`add_event_exception\` instead
+
+datetime format: "YYYY-MM-DD HH:MM:SS" e.g. "2024-01-15 08:00:00"
+
+Prerequisites:
+- \`list_events\` or \`get_event\` → find the ID
+- \`get_event\` → check current values before updating
+- \`list_event_time_zones\` → get valid time_zone values if changing timezone
+- \`list_account_users\` → get account_user_ids if changing attendees
+
+Related: \`override_event\` to change a single occurrence, \`terminate_event\` to end a series, \`add_event_exception\` to skip an occurrence, \`delete_event\` to remove permanently.`,
     {
       id: z.string().describe("Event ID to update"),
       start_time: z.string().optional().describe("Start time of the event e.g. 2024-01-01 08:00:00"),
