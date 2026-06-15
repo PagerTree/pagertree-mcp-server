@@ -50,7 +50,13 @@ Add to your `claude_desktop_config.json`:
 
 | Tool | Description | Parameters |
 | --- | --- | --- |
-| `get_account_user` | Get a single account user by ID. Includes roles, notification rule, and associated user details. | id |
+| `get_account_user` | Get a single account user by ID. Includes roles, notification rule, team memberships, and the nested user object with emails and phones.
+
+Tips:
+- Accepts ULID, tiny_id, or prefix_id for lookup e.g. `01KV5YNDYM25RR9JAWMNKZPHH6`, `123`, or `au_xxxx`
+- This is the primary tool for getting full user details
+
+Related: `list_account_users` to find IDs, `update_account_user` to modify, `delete_account_user` to remove. | id |
 | `get_alert` | Get a single alert by ID. Returns full details including title, description, urgency, status, timestamps, and meta (incident info).
 
 Related: `list_alerts` to find IDs, `acknowledge_alert` / `resolve_alert` / `reject_alert` to change state, `update_alert` to modify fields. | id |
@@ -73,8 +79,14 @@ Tips:
 - start and end are UTC datetime strings e.g. "2024-01-01 07:00:00"
 - Use list_schedules to find schedule IDs | id, start, end |
 | `get_team` | Get a single team by ID. Includes members, admins, schedule, and escalation policy. | id |
-| `get_user` | Get a single user by ID. Includes emails and phone numbers. | id |
-| `list_account_users` | List all account users. An account user represents a user associated with this account, including their roles and notification rules. | limit, offset, page, sort, direction |
+| `list_account_users` | List all account users. An account user represents a person associated with this account, including their roles, notification rules, team memberships, emails, and phones.
+
+Tips:
+- Sort by `id` asc/desc instead of `created_at` - IDs are ULIDs and time-sortable
+- This is the primary tool for finding user information - emails and phones are included in the nested `user` object
+- Default limit is 10, maximum is 100
+
+Related: `get_account_user` to fetch a single record by ID, `create_account_user` to add a new user to this account. | limit, offset, page, sort, direction |
 | `list_alert_comments` | List all comments on an alert.
 
 Prerequisites:
@@ -103,7 +115,6 @@ Related: `get_alert` to fetch a single alert by ID, `create_alert` to create a n
 | `list_schedules` | List all on-call schedules | - |
 | `list_team_alerts` | List alerts that have been assigned to a specific team. | id, limit, offset, page, sort, direction |
 | `list_teams` | List all teams | - |
-| `list_users` | List all users. Users represent physical people and include their emails and phone numbers. | limit, offset, page, sort, direction |
 
 ## License
 
