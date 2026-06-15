@@ -48,8 +48,6 @@ Add to your `claude_desktop_config.json`:
 
 ## Available Tools
 
-| Tool | Description | Parameters |
-| --- | --- | --- |
 {{TOOLS_TABLE}}
 
 ## License

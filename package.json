@@ -18,7 +18,7 @@
     "lint:fix": "eslint src/**/*.ts --fix",
     "test": "vitest run",
     "test:watch": "vitest",
-    "generate-readme": "tsc && node dist/generate-readme.js"
+    "generate-readme": "tsc && PAGERTREE_READ_ONLY=false node dist/generate-readme.js"
   },
   "keywords": [
     "mcp",
