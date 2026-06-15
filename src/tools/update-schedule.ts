@@ -5,7 +5,13 @@ import { pagertree } from "../client.js";
 export function registerUpdateSchedule(server: McpServer) {
   server.tool(
     "update_schedule",
-    "Update an existing on-call schedule.",
+    `Update an existing schedule. Currently only the name can be updated.
+
+Prerequisites:
+- \`list_schedules\` or \`get_schedule\` → find the ID
+- \`get_team\` → find the team's current schedule_id
+
+Related: \`get_schedule\` to read current state, \`delete_schedule\` to remove, \`flush_schedule\` to clear all events.`,
     {
       id: z.string().describe("Schedule ID to update"),
       name: z.string().describe("New name for the schedule"),
