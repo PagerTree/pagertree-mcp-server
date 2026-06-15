@@ -20,7 +20,7 @@ describe("escalation policies", () => {
     it("returns escalation policies", async () => {
       vi.spyOn(client.pagertree, "listEscalationPolicies").mockResolvedValue({ data: [mockPolicy], has_more: false, total_count: 1 });
       const result = parseResult(await mcpClient.callTool({ name: "list_escalation_policies", arguments: {} }));
-      expect((result as any).data).toHaveLength(1);
+      expect(result.data).toHaveLength(1);
     });
   });
 

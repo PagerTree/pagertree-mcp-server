@@ -17,7 +17,7 @@ describe("logs", () => {
     it("returns logs", async () => {
       vi.spyOn(client.pagertree, "listLogs").mockResolvedValue({ data: [mockLog], has_more: false, total_count: 1 });
       const result = parseResult(await mcpClient.callTool({ name: "list_logs", arguments: {} }));
-      expect((result as any).data).toHaveLength(1);
+      expect(result.data).toHaveLength(1);
     });
 
     it("passes owner_id and owner_type filters", async () => {
@@ -40,7 +40,7 @@ describe("logs", () => {
     it("returns log data", async () => {
       vi.spyOn(client.pagertree, "getLog").mockResolvedValue({ data: mockLog });
       const result = parseResult(await mcpClient.callTool({ name: "get_log", arguments: { id: "log_123" } }));
-      expect((result as any).data.body).toBe("Alert created");
+      expect(result.data.body).toBe("Alert created");
     });
   });
 });

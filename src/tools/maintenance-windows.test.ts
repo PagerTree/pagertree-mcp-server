@@ -20,7 +20,7 @@ describe("maintenance windows", () => {
     it("returns maintenance windows", async () => {
       vi.spyOn(client.pagertree, "listMaintenanceWindows").mockResolvedValue({ data: [mockWindow], has_more: false, total_count: 1 });
       const result = parseResult(await mcpClient.callTool({ name: "list_maintenance_windows", arguments: {} }));
-      expect((result as any).data).toHaveLength(1);
+      expect(result.data).toHaveLength(1);
     });
   });
 

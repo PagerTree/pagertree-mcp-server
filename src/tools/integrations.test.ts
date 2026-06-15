@@ -24,7 +24,7 @@ describe("integrations", () => {
     it("returns integrations", async () => {
       vi.spyOn(client.pagertree, "listIntegrations").mockResolvedValue({ data: [mockIntegration], has_more: false, total_count: 1 });
       const result = parseResult(await mcpClient.callTool({ name: "list_integrations", arguments: {} }));
-      expect((result as any).data).toHaveLength(1);
+      expect(result.data).toHaveLength(1);
     });
   });
 
@@ -122,7 +122,7 @@ describe("integrations", () => {
     it("returns integration types", async () => {
       vi.spyOn(client.pagertree, "listIntegrationTypes").mockResolvedValue({ data: [{ id: "it_123", name: "Datadog" }], has_more: false, total_count: 1 });
       const result = parseResult(await mcpClient.callTool({ name: "list_integration_types", arguments: {} }));
-      expect((result as any).data).toHaveLength(1);
+      expect(result.data).toHaveLength(1);
     });
   });
 

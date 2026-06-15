@@ -18,7 +18,7 @@ describe("account users", () => {
     it("calls listAccountUsers and returns data", async () => {
       vi.spyOn(client.pagertree, "listAccountUsers").mockResolvedValue({ data: [{ id: "1", name: "Alice" }], has_more: false, total_count: 1 });
       const result = parseResult(await mcpClient.callTool({ name: "list_account_users", arguments: {} }));
-      expect((result as any).data).toHaveLength(1);
+      expect(result.data).toHaveLength(1);
     });
 
     it("passes pagination params", async () => {
@@ -41,7 +41,7 @@ describe("account users", () => {
     it("returns the account user data", async () => {
       vi.spyOn(client.pagertree, "getAccountUser").mockResolvedValue({ data: { id: "au_123", name: "Alice" } });
       const result = parseResult(await mcpClient.callTool({ name: "get_account_user", arguments: { id: "au_123" } }));
-      expect((result as any).data.name).toBe("Alice");
+      expect(result.data.name).toBe("Alice");
     });
   });
 

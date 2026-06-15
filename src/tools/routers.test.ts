@@ -21,7 +21,7 @@ describe("routers", () => {
     it("returns routers", async () => {
       vi.spyOn(client.pagertree, "listRouters").mockResolvedValue({ data: [mockRouter], has_more: false, total_count: 1 });
       const result = parseResult(await mcpClient.callTool({ name: "list_routers", arguments: {} }));
-      expect((result as any).data).toHaveLength(1);
+      expect(result.data).toHaveLength(1);
     });
   });
 

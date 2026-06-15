@@ -21,7 +21,7 @@ describe("notification rules", () => {
     it("returns notification rules", async () => {
       vi.spyOn(client.pagertree, "listNotificationRules").mockResolvedValue({ data: [mockRule], has_more: false, total_count: 1 });
       const result = parseResult(await mcpClient.callTool({ name: "list_notification_rules", arguments: {} }));
-      expect((result as any).data).toHaveLength(1);
+      expect(result.data).toHaveLength(1);
     });
   });
 

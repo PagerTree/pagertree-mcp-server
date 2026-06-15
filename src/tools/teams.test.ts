@@ -22,7 +22,7 @@ describe("teams", () => {
     it("returns teams", async () => {
       vi.spyOn(client.pagertree, "listTeams").mockResolvedValue({ data: [mockTeam], has_more: false, total_count: 1 });
       const result = parseResult(await mcpClient.callTool({ name: "list_teams", arguments: {} }));
-      expect((result as any).data).toHaveLength(1);
+      expect(result.data).toHaveLength(1);
     });
 
     it("passes pagination params", async () => {
@@ -45,7 +45,7 @@ describe("teams", () => {
     it("returns team data", async () => {
       vi.spyOn(client.pagertree, "getTeam").mockResolvedValue({ data: mockTeam });
       const result = parseResult(await mcpClient.callTool({ name: "get_team", arguments: { id: "tem_123" } }));
-      expect((result as any).data.name).toBe("Engineering");
+      expect(result.data.name).toBe("Engineering");
     });
   });
 
@@ -126,7 +126,7 @@ describe("teams", () => {
     it("returns oncall users", async () => {
       vi.spyOn(client.pagertree, "getCurrentOncallForTeam").mockResolvedValue({ data: [{ id: "au_123", name: "Alice" }] });
       const result = parseResult(await mcpClient.callTool({ name: "get_current_oncall", arguments: { team_id: "tem_123" } }));
-      expect((result as any).data).toHaveLength(1);
+      expect(result.data).toHaveLength(1);
     });
   });
 

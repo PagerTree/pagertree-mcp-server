@@ -22,7 +22,7 @@ describe("broadcasts", () => {
     it("returns broadcasts", async () => {
       vi.spyOn(client.pagertree, "listBroadcasts").mockResolvedValue({ data: [mockBroadcast], has_more: false, total_count: 1 });
       const result = parseResult(await mcpClient.callTool({ name: "list_broadcasts", arguments: {} }));
-      expect((result as any).data).toHaveLength(1);
+      expect(result.data).toHaveLength(1);
     });
 
     it("passes pagination params", async () => {

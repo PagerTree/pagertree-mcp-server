@@ -24,7 +24,7 @@ describe("events", () => {
     it("returns events", async () => {
       vi.spyOn(client.pagertree, "listEvents").mockResolvedValue({ data: [mockEvent], has_more: false, total_count: 1 });
       const result = parseResult(await mcpClient.callTool({ name: "list_events", arguments: {} }));
-      expect((result as any).data).toHaveLength(1);
+      expect(result.data).toHaveLength(1);
     });
   });
 
@@ -154,7 +154,7 @@ describe("events", () => {
     it("calls listEventTimeZones and returns data", async () => {
       vi.spyOn(client.pagertree, "listEventTimeZones").mockResolvedValue({ data: ["UTC", "Arizona", "Eastern Time (US & Canada)"] });
       const result = parseResult(await mcpClient.callTool({ name: "list_event_time_zones", arguments: {} }));
-      expect((result as any).data).toContain("UTC");
+      expect(result.data).toContain("UTC");
     });
   });
 });

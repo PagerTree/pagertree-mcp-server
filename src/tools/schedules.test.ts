@@ -24,7 +24,7 @@ describe("schedules", () => {
     it("returns schedules", async () => {
       vi.spyOn(client.pagertree, "listSchedules").mockResolvedValue({ data: [mockSchedule], has_more: false, total_count: 1 });
       const result = parseResult(await mcpClient.callTool({ name: "list_schedules", arguments: {} }));
-      expect((result as any).data).toHaveLength(1);
+      expect(result.data).toHaveLength(1);
     });
   });
 
@@ -96,7 +96,7 @@ describe("schedules", () => {
     it("returns oncall users", async () => {
       vi.spyOn(client.pagertree, "getScheduleCurrentOncall").mockResolvedValue({ data: [{ id: "au_123", name: "Alice" }] });
       const result = parseResult(await mcpClient.callTool({ name: "get_schedule_current_oncall", arguments: { id: "sch_123" } }));
-      expect((result as any).data).toHaveLength(1);
+      expect(result.data).toHaveLength(1);
     });
   });
 
