@@ -5,7 +5,12 @@ import { pagertree } from "../client.js";
 export function registerDeleteBroadcast(server: McpServer) {
   server.tool(
     "delete_broadcast",
-    "Delete a broadcast permanently.",
+    `Permanently delete a broadcast. Cannot be undone.
+
+Prerequisites:
+- \`get_broadcast\` → confirm correct record before deleting
+
+Related: \`list_broadcasts\` to find IDs.`,
     {
       id: z.string().describe("Broadcast ID to delete"),
     },

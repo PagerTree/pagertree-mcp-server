@@ -5,7 +5,12 @@ import { pagertree } from "../client.js";
 export function registerCreateBroadcastComment(server: McpServer) {
   server.tool(
     "create_broadcast_comment",
-    "Add a comment to a broadcast.",
+    `Add a comment to a broadcast.
+
+Prerequisites:
+- \`list_broadcasts\` or \`get_broadcast\` → find the broadcast ID
+
+Related: \`list_broadcast_comments\` to read existing comments.`,
     {
       id: z.string().describe("Broadcast ID to comment on"),
       body: z.string().describe("Comment text"),

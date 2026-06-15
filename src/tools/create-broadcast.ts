@@ -7,11 +7,25 @@ export function registerCreateBroadcast(server: McpServer) {
     "create_broadcast",
     `Create and send a new broadcast to teams or account users.
 
+Required: title, at least 1 destination (destination_team_ids or destination_account_user_ids)
+Optional: description, response_requested, channels, tags
+
+Prerequisites:
+- \`list_teams\` → find destination_team_ids
+- \`list_account_users\` → find destination_account_user_ids
+
 Tips:
-- Requires at least 1 destination (team or account user)
-- If response_requested is true, at least 1 broadcast_response_options_attributes value is required
-- response_requested_by is a datetime deadline for responses e.g. "2024-01-01 17:00:00"
-- select_specific_channels allows forcing specific notification channels`,
+- Broadcast is sent immediately on creation
+- If response_requested is true, at least 1 broadcast_response_options_attributes value is required e.g. "Yes", "No"
+- response_requested_by is a deadline datetime for responses e.g. "2024-01-01 17:00:00"
+- If select_specific_channels is false (default), recipients are notified via their notification rule channels
+- If select_specific_channels is true, only the channels you specify (notify_push, notify_email, notify_sms, notify_slack, notify_whatsapp) are used
+
+Errors:
+- 422 if no destination is provided
+- 422 if response_requested is true but no response options are provided
+
+Related: \`update_broadcast\` to modify, \`delete_broadcast\` to remove, \`create_broadcast_comment\` to add a comment.`,
     {
       title: z.string().describe("Title of the broadcast"),
       destination_team_ids: z.array(z.string()).optional().describe("Team IDs to send the broadcast to. Use list_teams to find IDs."),

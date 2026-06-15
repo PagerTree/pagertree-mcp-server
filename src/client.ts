@@ -215,17 +215,7 @@ export const pagertree = {
   updateBroadcast: (id: string, params: {
     title?: string;
     description?: string;
-    destination_team_ids?: string[];
-    destination_account_user_ids?: string[];
     tag_list?: string[];
-    response_requested?: boolean;
-    response_requested_by?: string;
-    select_specific_channels?: boolean;
-    notify_push?: boolean;
-    notify_email?: boolean;
-    notify_sms?: boolean;
-    notify_slack?: boolean;
-    notify_whatsapp?: boolean;
   }) =>
     request<{ data: unknown }>(`/broadcasts/${id}`, {
       method: "PUT",
