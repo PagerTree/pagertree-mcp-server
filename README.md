@@ -51,7 +51,9 @@ Add to your `claude_desktop_config.json`:
 | Tool | Description | Parameters |
 | --- | --- | --- |
 | `get_account_user` | Get a single account user by ID. Includes roles, notification rule, and associated user details. | id |
-| `get_alert` | Get a single alert by ID | id |
+| `get_alert` | Get a single alert by ID. Returns full details including title, description, urgency, status, timestamps, and meta (incident info).
+
+Related: `list_alerts` to find IDs, `acknowledge_alert` / `resolve_alert` / `reject_alert` to change state, `update_alert` to modify fields. | id |
 | `get_broadcast` | Get a single broadcast by ID. Includes status, response options, and response counts. | id |
 | `get_current_oncall` | Get who is currently on-call for a team. Returns the on-call event attendees for right now, handling repeating events and rotations. | team_id |
 | `get_escalation_policy` | Get a single escalation policy by ID. Includes escalation layers, repeat settings, and reassignment targets. | id |
@@ -73,8 +75,20 @@ Tips:
 | `get_team` | Get a single team by ID. Includes members, admins, schedule, and escalation policy. | id |
 | `get_user` | Get a single user by ID. Includes emails and phone numbers. | id |
 | `list_account_users` | List all account users. An account user represents a user associated with this account, including their roles and notification rules. | limit, offset, page, sort, direction |
-| `list_alert_comments` | List all comments on an alert. | id |
-| `list_alerts` | List alerts with pagination and filtering. Returns data, has_more, and total_count. | status, limit, offset, page, sort, direction |
+| `list_alert_comments` | List all comments on an alert.
+
+Prerequisites:
+- `list_alerts` or `get_alert` → find the alert ID
+
+Related: `create_alert_comment` to add a comment. | id |
+| `list_alerts` | List alerts. Returns paginated data, has_more, and total_count.
+
+Tips:
+- Sort by `id` asc/desc instead of `created_at` - IDs are ULIDs and time-sortable
+- Use `status` to filter: open, acknowledged, resolved, dropped
+- Default limit is 10, maximum is 100
+
+Related: `get_alert` to fetch a single alert by ID, `create_alert` to create a new alert. | status, limit, offset, page, sort, direction |
 | `list_broadcast_comments` | List all comments on a broadcast. | id |
 | `list_broadcasts` | List all broadcasts. Broadcasts are used to notify specific account users and teams with an optional response request. | limit, offset, page, sort, direction |
 | `list_escalation_policies` | List all escalation policies. Escalation policies define how an alert moves through a team's on-call schedule. | limit, offset, page, sort, direction |
