@@ -1,3 +1,4 @@
+import { z } from "zod";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { pagertree } from "../client.js";
 
@@ -13,9 +14,15 @@ Tips:
 - When a team is created, PagerTree automatically creates a default schedule and escalation policy
 
 Related: \`get_team\` to fetch a single record including schedule_id and escalation_policy_id, \`create_team\` to create a new team.`,
-    {},
-    async () => {
-      const result = await pagertree.listTeams();
+    {
+      limit: z.number().int().min(1).max(100).optional().default(10).describe("Number of teams to return"),
+      offset: z.number().int().min(0).optional().describe("Number of records to skip"),
+      page: z.number().int().min(1).optional().describe("Page number"),
+      sort: z.string().optional().describe("Attribute to sort by. Use id instead of created_at."),
+      direction: z.enum(["asc", "desc"]).optional().describe("Sort direction"),
+    },
+    async ({ limit, offset, page, sort, direction }) => {
+      const result = await pagertree.listTeams({ limit, offset, page, sort, direction });
       return {
         content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
       };
