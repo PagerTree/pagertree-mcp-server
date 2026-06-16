@@ -54,7 +54,7 @@ describe("alerts", () => {
     it("returns alert data", async () => {
       vi.spyOn(client.pagertree, "getAlert").mockResolvedValue({ data: mockAlert });
       const result = parseResult(await mcpClient.callTool({ name: "get_alert", arguments: { id: "alt_123" } }));
-      expect(result.data.title).toBe("Test Alert");
+      expect((result.data as Record<string, unknown>).title).toBe("Test Alert");
     });
   });
 
@@ -115,7 +115,7 @@ describe("alerts", () => {
       vi.spyOn(client.pagertree, "acknowledgeAlert").mockResolvedValue({ data: mockAlert });
       vi.spyOn(client.pagertree, "getAlert").mockResolvedValue({ data: { ...mockAlert, status: "acknowledged" } });
       const result = parseResult(await mcpClient.callTool({ name: "acknowledge_alert", arguments: { id: "alt_123" } }));
-      expect(result.data.status).toBe("acknowledged");
+      expect((result.data as Record<string, unknown>).status).toBe("acknowledged");
     });
   });
 

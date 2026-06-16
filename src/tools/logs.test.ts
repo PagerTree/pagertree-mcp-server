@@ -40,7 +40,7 @@ describe("logs", () => {
     it("returns log data", async () => {
       vi.spyOn(client.pagertree, "getLog").mockResolvedValue({ data: mockLog });
       const result = parseResult(await mcpClient.callTool({ name: "get_log", arguments: { id: "log_123" } }));
-      expect(result.data.body).toBe("Alert created");
+      expect((result.data as Record<string, unknown>).body).toBe("Alert created");
     });
   });
 });

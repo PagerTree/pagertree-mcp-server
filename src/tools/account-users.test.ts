@@ -41,7 +41,7 @@ describe("account users", () => {
     it("returns the account user data", async () => {
       vi.spyOn(client.pagertree, "getAccountUser").mockResolvedValue({ data: { id: "au_123", name: "Alice" } });
       const result = parseResult(await mcpClient.callTool({ name: "get_account_user", arguments: { id: "au_123" } }));
-      expect(result.data.name).toBe("Alice");
+      expect((result.data as Record<string, unknown>).name).toBe("Alice");
     });
   });
 

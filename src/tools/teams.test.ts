@@ -45,7 +45,7 @@ describe("teams", () => {
     it("returns team data", async () => {
       vi.spyOn(client.pagertree, "getTeam").mockResolvedValue({ data: mockTeam });
       const result = parseResult(await mcpClient.callTool({ name: "get_team", arguments: { id: "tem_123" } }));
-      expect(result.data.name).toBe("Engineering");
+      expect((result.data as Record<string, unknown>).name).toBe("Engineering");
     });
   });
 
