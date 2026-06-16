@@ -10,7 +10,7 @@ First, pull the Docker image:
 docker pull ghcr.io/pagertree/pagertree-mcp-server:latest
 ```
 
-Then configure your MCP client. Find your API token in your [PagerTree account settings](https://app.pagertree.com/user/api-tokens).
+Then configure your MCP client. Find your API token in your [PagerTree account settings](https://app.pagertree.com/user/settings).
 
 ### Claude Desktop
 
