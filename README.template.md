@@ -153,7 +153,7 @@ Add to `~/.config/zed/settings.json`:
 ### Claude Code
 
 ```bash
-claude mcp add pagertree -- docker run --rm -i -e PAGERTREE_API_TOKEN=your-api-token-here ghcr.io/pagertree/pagertree-mcp-server:latest
+claude mcp add pagertree -- docker run --rm -i -e PAGERTREE_API_TOKEN=your-api-token-here -e PAGERTREE_READ_ONLY=false ghcr.io/pagertree/pagertree-mcp-server:latest
 ```
 
 ## Configuration
@@ -162,7 +162,7 @@ claude mcp add pagertree -- docker run --rm -i -e PAGERTREE_API_TOKEN=your-api-t
 
 | Variable | Required | Default | Description |
 | --- | --- | --- | --- |
-| `PAGERTREE_API_TOKEN` | Yes | - | Your PagerTree API token. Find it in your [PagerTree account settings](https://app.pagertree.com/user/api-tokens). |
+| `PAGERTREE_API_TOKEN` | Yes | - | Your PagerTree API token. Find it in your [PagerTree account settings](https://app.pagertree.com/user/settings). |
 | `PAGERTREE_READ_ONLY` | No | `true` | Run in read-only mode. Only list/get tools are available. Set to `false` to enable write operations. |
 | `PAGERTREE_API_URL` | No | `https://api.pagertree.com/api/v4` | Override the API base URL. |
 
