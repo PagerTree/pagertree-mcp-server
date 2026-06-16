@@ -164,7 +164,7 @@ Add to your `claude_desktop_config.json`:
 
 | Tool | Description | Parameters |
 | --- | --- | --- |
-| `list_schedules` | List all on-call schedules. Schedules are composed of calendar events that define who is on-call, when, and for which escalation layer. | - |
+| `list_schedules` | List all on-call schedules. Schedules are composed of calendar events that define who is on-call, when, and for which escalation layer. | limit, offset, page, sort, direction |
 | `get_schedule` | Get a single on-call schedule by ID. Includes name and associated team. | id |
 | `create_schedule` | Create a new on-call schedule. | name |
 | `update_schedule` | Update an existing schedule. Currently only the name can be updated. | id, name |
@@ -178,7 +178,7 @@ Add to your `claude_desktop_config.json`:
 
 | Tool | Description | Parameters |
 | --- | --- | --- |
-| `list_teams` | List all teams. Teams are the primary organizational unit in PagerTree - they group account users together and have an associated schedule and escalation policy for managing on-call and alert routing. | - |
+| `list_teams` | List all teams. Teams are the primary organizational unit in PagerTree - they group account users together and have an associated schedule and escalation policy for managing on-call and alert routing. | limit, offset, page, sort, direction |
 | `get_team` | Get a single team by ID. Includes members, admins, active schedule_id, active escalation_policy_id, notification settings, and notes. | id |
 | `create_team` | Create a new team. | name, member_account_user_ids, admin_account_user_ids, notes, drop_notifications, handoff_notifications, drop_notification_account_user_ids, handoff_notification_account_user_ids |
 | `update_team` | Update an existing team. Only send fields you want to change - omitted fields are left as-is. | id, name, notes, escalation_policy_id, schedule_id, member_account_user_ids, admin_account_user_ids, drop_notifications, handoff_notifications, drop_notification_account_user_ids, handoff_notification_account_user_ids |
