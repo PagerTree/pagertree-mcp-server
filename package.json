@@ -30,7 +30,7 @@
   "author": "PagerTree LLC",
   "license": "MIT",
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.29.0",
+    "@modelcontextprotocol/sdk": "^1.31.0",
     "zod": "^4.4.3"
   },
   "devDependencies": {
